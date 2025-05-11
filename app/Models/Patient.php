@@ -14,7 +14,7 @@ class Patient extends Model
 
     public function user(): BelongsTo
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function appointments(): HasMany
