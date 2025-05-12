@@ -33,11 +33,11 @@ class UserResource extends Resource
                 //     ->password()
                 //     ->required(),
                 Forms\Components\Select::make('role')
-                ->options([
-                    'patient' => 'Patient',
-                    'doctor' => 'Doctor',
-                    'admin' => 'Admin',
-                ])
+                    ->options([
+                        'patient' => 'Patient',
+                        'doctor' => 'Doctor',
+                        'admin' => 'Admin',
+                    ])
                     ->required(),
             ]);
     }
@@ -64,9 +64,9 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('role')
                     ->badge()
                     ->colors([
-                        'success' => fn (string $state): bool => $state === 'patient',
-                        'warning' => fn (string $state): bool => $state === 'doctor',
-                        'danger' => fn (string $state): bool => $state === 'admin',
+                        'success' => fn(string $state): bool => $state === 'patient',
+                        'warning' => fn(string $state): bool => $state === 'doctor',
+                        'danger' => fn(string $state): bool => $state === 'admin',
                     ])
                     ->searchable(),
             ])

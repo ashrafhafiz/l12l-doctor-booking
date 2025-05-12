@@ -23,45 +23,46 @@ class DoctorScheduleResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-        ->schema([
-            Grid::make(1)->schema([
-                // Forms\Components\Select::make('doctor_id')
-                //     ->relationship(
-                //         name: 'doctor',
-                //         titleAttribute: 'doctor_id',
-                //         )
-                //     ->getOptionLabelFromRecordUsing(fn ($record) => $record->user->name)
-                //     ->searchable()
-                //     ->preload()
-                //     ->required(),
-                Forms\Components\Select::make('available_day')
-                    ->options([
-                        1 => 'Sunday',
-                        2 => 'Monday',
-                        3 => 'Tuesday',
-                        4 => 'Wednesday',
-                        5 => 'Thursday',
-                        6 => 'Friday',
-                        7 => 'Saturday',
-                    ])
-                    ->required(),
-                Forms\Components\TimePicker::make('start_time'),
-                Forms\Components\TimePicker::make('end_time'),
-            ])
-            ->columnSpan(1)
-        ]);
+            ->schema([
+                Grid::make(1)->schema([
+                    // Forms\Components\Select::make('doctor_id')
+                    //     ->relationship(
+                    //         name: 'doctor',
+                    //         titleAttribute: 'doctor_id',
+                    //         )
+                    //     ->getOptionLabelFromRecordUsing(fn ($record) => $record->user->name)
+                    //     ->searchable()
+                    //     ->preload()
+                    //     ->required(),
+                    Forms\Components\Select::make('available_day')
+                        ->options([
+                            1 => 'Sunday',
+                            2 => 'Monday',
+                            3 => 'Tuesday',
+                            4 => 'Wednesday',
+                            5 => 'Thursday',
+                            6 => 'Friday',
+                            7 => 'Saturday',
+                        ])
+                        ->required(),
+                    Forms\Components\TimePicker::make('start_time'),
+                    Forms\Components\TimePicker::make('end_time'),
+                ])
+                    ->columnSpan(1)
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn(Builder $query) => $query->where('doctor_id', auth()->user()->doctor->id))
             ->columns([
                 Tables\Columns\TextColumn::make('doctor.user.name')
                     ->label('Doctor Name')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('available_day')
-                    ->formatStateUsing(fn ($state) => match ($state) {
+                    ->formatStateUsing(fn($state) => match ($state) {
                         1 => 'Sunday',
                         2 => 'Monday',
                         3 => 'Tuesday',

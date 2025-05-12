@@ -24,8 +24,28 @@ class PatientResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->required(),
+                    ->relationship('user', 'name', fn(Builder $query) => $query->where('role', 'patient'))
+                    ->searchable()
+                    ->preload()
+                    ->required()
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('name')
+                            ->required(),
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->required(),
+                        Forms\Components\DateTimePicker::make('email_verified_at'),
+                        Forms\Components\TextInput::make('password')
+                            ->password()
+                            ->required(),
+                        Forms\Components\Select::make('role')
+                            ->options([
+                                'patient' => 'Patient',
+                                'doctor' => 'Doctor',
+                                'admin' => 'Admin',
+                            ])
+                            ->required(),
+                    ]),
             ]);
     }
 
