@@ -24,7 +24,7 @@ class DoctorResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
+                    ->relationship('user', 'name', fn(Builder $query) => $query->where('role', 'doctor'))
                     ->required(),
                 Forms\Components\TextInput::make('speciality_id')
                     ->required()
@@ -42,8 +42,8 @@ class DoctorResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('speciality_id')
                     ->numeric()
                     ->sortable(),
