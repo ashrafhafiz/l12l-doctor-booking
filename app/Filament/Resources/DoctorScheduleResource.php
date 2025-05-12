@@ -24,10 +24,27 @@ class DoctorScheduleResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('doctor_id')
-                    ->relationship('doctor', 'bio')
+                    ->relationship(
+                        name: 'doctor',
+                        titleAttribute: 'doctor_id',
+                        // modifyQueryUsing: fn (Builder $query) => $query->with('user')->select('*')
+                        //     ->join('users', 'doctors.user_id', '=', 'users.id')
+                    )
+                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->user->name)
+                    ->searchable()
+                    ->preload()
                     ->required(),
-                Forms\Components\TextInput::make('available_day')
-                    ->numeric(),
+                Forms\Components\Select::make('available_day')
+                    ->options([
+                        1 => 'Sunday',
+                        2 => 'Monday',
+                        3 => 'Tuesday',
+                        4 => 'Wednesday',
+                        5 => 'Thursday',
+                        6 => 'Friday',
+                        7 => 'Saturday',
+                    ])
+                    ->required(),
                 Forms\Components\TimePicker::make('start_time'),
                 Forms\Components\TimePicker::make('end_time'),
             ]);
@@ -37,11 +54,21 @@ class DoctorScheduleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('doctor_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('doctor.user.name')
+                    ->label('Doctor Name')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('available_day')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state) => match ($state) {
+                        1 => 'Sunday',
+                        2 => 'Monday',
+                        3 => 'Tuesday',
+                        4 => 'Wednesday',
+                        5 => 'Thursday',
+                        6 => 'Friday',
+                        7 => 'Saturday',
+                        default => 'Unknown',
+                    })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_time'),
                 Tables\Columns\TextColumn::make('end_time'),
