@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Doctor;
+use App\Models\Hospital;
 use App\Models\Speciality;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -32,19 +33,25 @@ class DoctorSeeder extends Seeder
         // Get all speciality IDs
         $specialityIds = Speciality::pluck('id')->toArray();
 
+        // Get all hospitals names
+        $hospitalNames = Hospital::pluck('name')->toArray();
+
         // Get all existing users with doctor role
         $doctorUsers = User::where('role', 'doctor')->get();
 
         // Create doctor records for existing doctor users
         $specialityCount = count($specialityIds);
+        $hospitalCount = count($hospitalNames);
+
         foreach ($doctorUsers as $index => $user) {
             // Use modulo to loop through speciality IDs sequentially
             $specialityIndex = $index % $specialityCount;
-            
+            $hospitalIndex = $index % $hospitalCount;
             Doctor::factory()
                 ->create([
                     'user_id' => $user->id,
                     'speciality_id' => $specialityIds[$specialityIndex],
+                    'hospital_name' => $hospitalNames[$hospitalIndex]
                 ]);
         }
 

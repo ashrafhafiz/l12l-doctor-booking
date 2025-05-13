@@ -63,7 +63,25 @@ class DoctorResource extends Resource
                             })
                             ->searchable()
                             ->preload()
-                            ->required(),
+                            ->required()
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('name')
+                                    ->required(),
+                                Forms\Components\TextInput::make('address')
+                                    ->required(),
+                                Forms\Components\TextInput::make('phone')
+                                    ->tel(),
+                                Forms\Components\TextInput::make('email')
+                                    ->email(),
+                                Forms\Components\TextInput::make('website'),
+                                Forms\Components\FileUpload::make('image')
+                                    ->disk('public')
+                                    ->directory('hospitals')
+                                    ->preserveFilenames()
+                                    ->visibility('public')
+                                    ->image(),
+                                Forms\Components\TextInput::make('description'),
+                            ]),
                         Forms\Components\Textarea::make('bio')
                             ->columnSpanFull(),
                     ])->columnSpan(2),
@@ -92,7 +110,8 @@ class DoctorResource extends Resource
                 Tables\Columns\ImageColumn::make('photo')
                     ->label('Profile Image')
                     ->circular()
-                    ->size(50),
+                    ->size(50)
+                    ->defaultImageUrl(asset('images/default-doctor2.svg')),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Doctor')
                     ->sortable()

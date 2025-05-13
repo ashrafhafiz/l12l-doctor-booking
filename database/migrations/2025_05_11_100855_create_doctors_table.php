@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('bio')->nullable();
             $table->string('experience')->nullable();
             $table->boolean('is_featured')->default(true);
+            $table->string('hospital_name')->nullable();
             $table->string('photo')->nullable();
             $table->timestamps();
         });
