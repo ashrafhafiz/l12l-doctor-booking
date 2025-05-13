@@ -2,17 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\DoctorResource\Pages;
-use App\Filament\Resources\DoctorResource\RelationManagers;
-use App\Models\Doctor;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Doctor;
+use App\Models\Hospital;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\DoctorResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use App\Filament\Resources\DoctorResource\RelationManagers;
 
 class DoctorResource extends Resource
 {
@@ -56,6 +57,13 @@ class DoctorResource extends Resource
                             ->searchable()
                             ->preload()
                             ->required(),
+                        Forms\Components\Select::make('hospital_name')
+                            ->options(function () {
+                                return Hospital::all()->pluck('name', 'id');
+                            })
+                            ->searchable()
+                            ->preload()
+                            ->required(),
                         Forms\Components\Textarea::make('bio')
                             ->columnSpanFull(),
                     ])->columnSpan(2),
@@ -68,6 +76,7 @@ class DoctorResource extends Resource
                             ->disk('public')
                             ->directory('doctors')
                             ->preserveFilenames()
+                            ->visibility('public')
                             ->image(),
                         Forms\Components\TextInput::make('experience'),
                         Forms\Components\Toggle::make('is_featured'),
@@ -95,7 +104,8 @@ class DoctorResource extends Resource
                     ->searchable(),
                 Tables\Columns\IconColumn::make('is_featured')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('photo')
+                Tables\Columns\TextColumn::make('hospital_name')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

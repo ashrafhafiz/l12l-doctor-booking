@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(Speciality::class)->constrained()->cascadeOnDelete();
             $table->text('bio')->nullable();
             $table->string('experience')->nullable();
-            $table->boolean('is_featured')->nullable();
+            $table->boolean('is_featured')->default(true);
             $table->string('photo')->nullable();
             $table->timestamps();
         });

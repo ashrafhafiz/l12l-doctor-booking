@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use App\Models\Speciality;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,12 @@ class DoctorFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => fn () => User::factory()->create(['role' => 'doctor'])->id,
+            'speciality_id' => fn () => Speciality::inRandomOrder()->first()->id,
+            'bio' => fake()->paragraph(),
+            'experience' => fake()->numberBetween(5, 30),
+            'is_featured' => true,
+            'photo' => 'doctors/avatar.png',
         ];
     }
 }
