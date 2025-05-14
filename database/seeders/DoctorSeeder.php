@@ -33,15 +33,15 @@ class DoctorSeeder extends Seeder
         // Get all speciality IDs
         $specialityIds = Speciality::pluck('id')->toArray();
 
-        // Get all hospitals names
-        $hospitalNames = Hospital::pluck('name')->toArray();
+        // Get all hospitals IDs
+        $hospitalIds = Hospital::pluck('id')->toArray();
 
         // Get all existing users with doctor role
         $doctorUsers = User::where('role', 'doctor')->get();
 
         // Create doctor records for existing doctor users
         $specialityCount = count($specialityIds);
-        $hospitalCount = count($hospitalNames);
+        $hospitalCount = count($hospitalIds);
 
         foreach ($doctorUsers as $index => $user) {
             // Use modulo to loop through speciality IDs sequentially
@@ -51,7 +51,7 @@ class DoctorSeeder extends Seeder
                 ->create([
                     'user_id' => $user->id,
                     'speciality_id' => $specialityIds[$specialityIndex],
-                    'hospital_name' => $hospitalNames[$hospitalIndex]
+                    'hospital_id' => $hospitalIds[$hospitalIndex]
                 ]);
         }
 

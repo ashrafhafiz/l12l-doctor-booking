@@ -57,10 +57,11 @@ class DoctorResource extends Resource
                             ->searchable()
                             ->preload()
                             ->required(),
-                        Forms\Components\Select::make('hospital_name')
-                            ->options(function () {
-                                return Hospital::all()->pluck('name', 'id');
-                            })
+                        Forms\Components\Select::make('hospital_id')
+                            ->relationship('hospital', 'name')
+                            // ->options(function () {
+                            //     return Hospital::all()->pluck('name', 'id');
+                            // })
                             ->searchable()
                             ->preload()
                             ->required()
@@ -123,7 +124,7 @@ class DoctorResource extends Resource
                     ->searchable(),
                 Tables\Columns\IconColumn::make('is_featured')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('hospital_name')
+                Tables\Columns\TextColumn::make('hospital.name')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

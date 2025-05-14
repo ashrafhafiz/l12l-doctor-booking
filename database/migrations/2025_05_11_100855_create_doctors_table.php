@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Hospital;
 use App\Models\Speciality;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,10 +18,10 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Speciality::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Hospital::class)->constrained()->cascadeOnDelete();
             $table->text('bio')->nullable();
             $table->string('experience')->nullable();
             $table->boolean('is_featured')->default(true);
-            $table->string('hospital_name')->nullable();
             $table->string('photo')->nullable();
             $table->timestamps();
         });
