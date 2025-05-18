@@ -99,7 +99,10 @@ class DoctorResource extends Resource
                             ->image(),
                         Forms\Components\TextInput::make('experience'),
                         Forms\Components\Toggle::make('is_featured'),
-                    ])->columnSpan(1),
+                    ])
+                    // ->extraAttributes(['class' => 'bg-amber-50'], true)
+                    // ->extraAttributes(['style' => 'background-color: rgb(255 251 235);'], true)
+                    ->columnSpan(1),
 
             ])->columns(3);
     }

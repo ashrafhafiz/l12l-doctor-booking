@@ -1,4 +1,4 @@
-<div class="flex items-center justify-center rounded-md">
+<div class="w-full flex items-center justify-center rounded-md">
     <x-app-logo-icon class="fill-current text-white dark:text-black" />
 </div>
 <div class="ms-1 grid flex-1 text-center text-sm">

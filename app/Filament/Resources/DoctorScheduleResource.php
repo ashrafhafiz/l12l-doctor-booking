@@ -30,19 +30,19 @@ class DoctorScheduleResource extends Resource
                         // modifyQueryUsing: fn (Builder $query) => $query->with('user')->select('*')
                         //     ->join('users', 'doctors.user_id', '=', 'users.id')
                     )
-                    ->getOptionLabelFromRecordUsing(fn ($record) => $record->user->name)
+                    ->getOptionLabelFromRecordUsing(fn($record) => $record->user->name)
                     ->searchable()
                     ->preload()
                     ->required(),
                 Forms\Components\Select::make('available_day')
                     ->options([
-                        1 => 'Sunday',
-                        2 => 'Monday',
-                        3 => 'Tuesday',
-                        4 => 'Wednesday',
-                        5 => 'Thursday',
-                        6 => 'Friday',
-                        7 => 'Saturday',
+                        0 => 'Sunday',
+                        1 => 'Monday',
+                        2 => 'Tuesday',
+                        3 => 'Wednesday',
+                        4 => 'Thursday',
+                        5 => 'Friday',
+                        6 => 'Saturday',
                     ])
                     ->required(),
                 Forms\Components\TimePicker::make('start_time'),
@@ -59,14 +59,14 @@ class DoctorScheduleResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('available_day')
-                    ->formatStateUsing(fn ($state) => match ($state) {
-                        1 => 'Sunday',
-                        2 => 'Monday',
-                        3 => 'Tuesday',
-                        4 => 'Wednesday',
-                        5 => 'Thursday',
-                        6 => 'Friday',
-                        7 => 'Saturday',
+                    ->formatStateUsing(fn($state) => match ($state) {
+                        0 => 'Sunday',
+                        1 => 'Monday',
+                        2 => 'Tuesday',
+                        3 => 'Wednesday',
+                        4 => 'Thursday',
+                        5 => 'Friday',
+                        6 => 'Saturday',
                         default => 'Unknown',
                     })
                     ->sortable(),

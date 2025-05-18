@@ -55,6 +55,11 @@ class BookingComponent extends Component
         for ($i = 0; $i < 365; $i++) { //1 year
             $date = $today->copy()->addDays($i);
             $dayOfWeek = $date->dayOfWeek;
+            // $dayOfWeek = $date->dayOfWeek - 1;
+
+            // if ($dayOfWeek < 0) {
+            //     $dayOfWeek = 6;
+            // }
 
             if (isset($availability[$dayOfWeek])) {
                 $dates[] = $date->format('Y-m-d');
@@ -141,7 +146,7 @@ class BookingComponent extends Component
             ])
             ->sendToDatabase($recipient);
         // session()->flash('message','appointment with Dr.'.$this->doctor_details->doctorUser->name.' on '.$this->selectedDate.$slot.' was created!');
-        Toaster::success('Appointment with Dr.' . $this->doctor_details->user->name . ' on ' . $this->selectedDate . ' at ' . $slot . ' was created!');
+        // Toaster::success('Appointment with Dr.' . $this->doctor_details->user->name . ' on ' . $this->selectedDate . ' at ' . $slot . ' was created!');
         return $this->redirect('/my-appointments');
     }
 
@@ -150,17 +155,17 @@ class BookingComponent extends Component
         // Send to Admin
         $appointmentData['recipient_name'] = 'Admin Admin';
         $appointmentData['recipient_role'] = 'admin';
-        Mail::to('shadrack@mballahrise.com')->queue(new AppointmentCreated($appointmentData));
+        // Mail::to('shadrack@mballahrise.com')->queue(new AppointmentCreated($appointmentData));
 
         // Send to Doctor
         $appointmentData['recipient_name'] = $appointmentData['doctor_name'];
         $appointmentData['recipient_role'] = 'doctor';
-        Mail::to($appointmentData['doctor_email'])->queue(new AppointmentCreated($appointmentData));
+        // Mail::to($appointmentData['doctor_email'])->queue(new AppointmentCreated($appointmentData));
 
         // Send queue Patient
         $appointmentData['recipient_name'] = $appointmentData['patient_name'];
         $appointmentData['recipient_role'] = 'patient';
-        Mail::to($appointmentData['patient_email'])->queue(new AppointmentCreated($appointmentData));
+        // Mail::to($appointmentData['patient_email'])->queue(new AppointmentCreated($appointmentData));
 
         return 'Appointment notifications sent successfully!';
     }
