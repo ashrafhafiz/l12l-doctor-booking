@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignIdFor(Patient::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Doctor::class)->constrained()->cascadeOnDelete();
             $table->enum('status', ['completed', 'incomplete'])->default('incomplete');
+            $table->enum('appointment_type', ['onsite', 'live consultation'])->nullable();
             $table->timestamps();
         });
     }
