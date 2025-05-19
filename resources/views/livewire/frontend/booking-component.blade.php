@@ -32,7 +32,7 @@
                     class="py-3 px-4 pe-9 block w-full bg-gray-100 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                     <option selected="">Open this select menu</option>
                     <option value="onsite">On site</option>
-                    <option value="live-consultation">Live consultation</option>
+                    <option value="live consultation">Live consultation</option>
                 </select>
                 <h3 class="text-sm font-semibold">Select an Available Date</h3>
                 <input type="text" id="datepicker" autocomplete="off"

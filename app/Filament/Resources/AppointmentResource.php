@@ -45,15 +45,22 @@ class AppointmentResource extends Resource
                 Tables\Columns\TextColumn::make('appointment_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('appointment_time'),
-                Tables\Columns\TextColumn::make('patient_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('appointment_time')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('doctor_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('appointment_type')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('patient.user.name')
+                    ->label('Patient Name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('doctor.user.name')
+                    ->label('Doctor Name')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
